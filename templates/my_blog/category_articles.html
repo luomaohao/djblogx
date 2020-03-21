@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for article in articles %}
+        <!-- 文章内容 -->
+                <div class="col-12 article-card" style=" border: 1px solid #00000020; margin-top: 15px ; border-radius: 4px">
+                <!-- 栏目 -->
+            {% if article.column %}
+                <button type="button"
+                    class="btn btn-sm mb-2
+                        {% if article.column.title == 'django' %}
+                            btn-success
+                        {% elif article.column.title == 'mysql' %}
+                            btn-danger
+                        {% elif article.column.title == 'html5' %}
+                            btn-success
+                        {% elif article.column.title ==
+                        'python' %}
+                            btn-warning
+                        }
+                        {% elif article.column.title ==
+                        'others' %}
+                            btn-danger
+                        {% endif %}
+                    "
+                >
+                    {{ article.column }}
+                </button>
+            {% endif %}
+            <!-- 标题 -->
+            <h4>
+                <b>
+                    <a href="{% url 'my_blog:article_detail' article.id %}"
+                       style="color: black;"
+                    >
+                        {{ article.title }}
+                    </a>
+                </b>
+            </h4>
+            <!-- 摘要 -->
+            <div>
+                <p style="color: gray;">
+                    {{ article.body|slice:'100' }}...
+                </p>
+            </div>
+            <!-- 注脚 -->
+            <p>
+                <!-- 附加信息 -->
+                <span style="color: lightskyblue;">
+                    {{ article.total_view}} 浏览&nbsp;&nbsp;&nbsp;
+                </span>
+                <span style="color: yellowgreen;">
+                    {{ article.created|date:'Y-m-d' }} 发布&nbsp;&nbsp;&nbsp;
+                </span>
+                <span style="color: pink;">
+                    {{ article.updated|date:'Y-m-d' }} 更新
+                </span>
+            </p>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
